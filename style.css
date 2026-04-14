@@ -102,8 +102,61 @@ a {
 }
 
 .hero-inner {
-  max-width: 720px;
+  max-width: 1000px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6rem;
+}
+
+/* Photo */
+.hero-photo-wrap {
+  flex-shrink: 0;
+  position: relative;
+  width: 240px;
+  height: 240px;
+}
+
+.hero-photo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg, var(--accent), transparent 60%, var(--accent));
+  opacity: 0.6;
+  animation: spin 8s linear infinite;
+}
+
+.hero-photo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.hero-photo {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  position: relative;
+  z-index: 1;
+  filter: grayscale(15%);
+  transition: filter var(--transition);
+}
+
+.hero-photo:hover {
+  filter: grayscale(0%);
+}
+
+.hero-text {
+  flex: 1;
 }
 
 .hero-greeting {
@@ -413,6 +466,16 @@ a {
    Responsive
 =========================== */
 @media (max-width: 900px) {
+  .hero-inner {
+    flex-direction: column;
+    gap: 2.5rem;
+    text-align: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
