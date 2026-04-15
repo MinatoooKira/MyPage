@@ -168,40 +168,45 @@
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Cursor spotlight — tracks mouse across the whole page
-    window.addEventListener('mousemove', (e) => {
-      document.body.style.setProperty('--cx', e.clientX + 'px');
-      document.body.style.setProperty('--cy', e.clientY + 'px');
-    }, { passive: true });
+    // Pointer-capable devices only (skip on touchscreens)
+    const hasHover = window.matchMedia('(hover: hover)').matches;
 
-    // Hero photo 3D tilt on mouse move
-    const heroEl = document.querySelector('.hero');
-    const photoWrap = document.querySelector('.hero-photo-wrap');
-    if (heroEl && photoWrap) {
-      heroEl.addEventListener('mousemove', (e) => {
-        const r = photoWrap.getBoundingClientRect();
-        const dx = (e.clientX - (r.left + r.width  / 2)) / 120;
-        const dy = (e.clientY - (r.top  + r.height / 2)) / 120;
-        photoWrap.style.transform =
-          `perspective(900px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg) scale(1.015)`;
-      });
-      heroEl.addEventListener('mouseleave', () => {
-        photoWrap.style.transform = '';
+    if (hasHover) {
+      // Cursor spotlight
+      window.addEventListener('mousemove', (e) => {
+        document.body.style.setProperty('--cx', e.clientX + 'px');
+        document.body.style.setProperty('--cy', e.clientY + 'px');
+      }, { passive: true });
+
+      // Hero photo 3D tilt
+      const heroEl = document.querySelector('.hero');
+      const photoWrap = document.querySelector('.hero-photo-wrap');
+      if (heroEl && photoWrap) {
+        heroEl.addEventListener('mousemove', (e) => {
+          const r = photoWrap.getBoundingClientRect();
+          const dx = (e.clientX - (r.left + r.width  / 2)) / 120;
+          const dy = (e.clientY - (r.top  + r.height / 2)) / 120;
+          photoWrap.style.transform =
+            `perspective(900px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg) scale(1.015)`;
+        });
+        heroEl.addEventListener('mouseleave', () => {
+          photoWrap.style.transform = '';
+        });
+      }
+
+      // Magnetic buttons
+      document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const r = btn.getBoundingClientRect();
+          const x = (e.clientX - r.left - r.width  / 2) * 0.3;
+          const y = (e.clientY - r.top  - r.height / 2) * 0.3;
+          btn.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = '';
+        });
       });
     }
-
-    // Magnetic buttons — subtle pull toward cursor
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('mousemove', (e) => {
-        const r = btn.getBoundingClientRect();
-        const x = (e.clientX - r.left - r.width  / 2) * 0.3;
-        const y = (e.clientY - r.top  - r.height / 2) * 0.3;
-        btn.style.transform = `translate(${x}px, ${y}px)`;
-      });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = '';
-      });
-    });
 
     // Dot-matrix text — "MinatoooKira" particle field with spring physics
     (function () {
@@ -286,6 +291,15 @@
         my = e.clientY - r.top;
       }, { passive: true });
       hero.addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
+
+      // Touch support
+      hero.addEventListener('touchmove', e => {
+        const t = e.touches[0];
+        const r = canvas.getBoundingClientRect();
+        mx = t.clientX - r.left;
+        my = t.clientY - r.top;
+      }, { passive: true });
+      hero.addEventListener('touchend', () => { mx = -9999; my = -9999; });
 
       document.fonts.ready.then(() => { resize(); tick(); });
 
