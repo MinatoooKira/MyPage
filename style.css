@@ -767,11 +767,11 @@ body::before {
 
 /* Hero name entrance — stroke reveal → fill */
 @keyframes heroStroke {
-  0%   { opacity: 0; clip-path: inset(0 100% 0 0); }
-  8%   { opacity: 1; clip-path: inset(0 100% 0 0); }
-  55%  { opacity: 1; clip-path: inset(0 0%   0 0); }
-  80%  { opacity: 1; clip-path: inset(0 0%   0 0); }
-  100% { opacity: 0; clip-path: inset(0 0%   0 0); }
+  0%   { opacity: 0; clip-path: inset(-8px 100% -8px 0); }
+  8%   { opacity: 1; clip-path: inset(-8px 100% -8px 0); }
+  55%  { opacity: 1; clip-path: inset(-8px 0%   -8px 0); }
+  80%  { opacity: 1; clip-path: inset(-8px 0%   -8px 0); }
+  100% { opacity: 0; clip-path: inset(-8px 0%   -8px 0); }
 }
 
 @keyframes heroFill {
