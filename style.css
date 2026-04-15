@@ -506,3 +506,35 @@ a {
     align-items: flex-start;
   }
 }
+
+/* ===========================
+   Animations
+=========================== */
+
+/* Nav: slightly more opaque when scrolled */
+.nav.scrolled {
+  background: rgba(15, 15, 15, 0.96);
+  box-shadow: 0 1px 0 var(--border);
+}
+
+/* Scroll fade-in-up */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tag hover */
+.tag {
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.tag:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}

@@ -44,11 +44,11 @@
     <div class="section-inner">
       <h2 class="section-title">About</h2>
       <div class="about-grid">
-        <div class="about-text">
+        <div class="about-text fade-in">
           <p>Undergraduate student at ShanghaiTech University, working at the intersection of synthetic biology and computational design. I build things that bridge wet lab and dry lab — from engineering proteins from scratch to writing code that makes sense of biological data.</p>
           <p>iGEM 2025 Gold Medalist and iGEM 2026 Advisor. Co-founder of MakeSense Club and Match Biotech. Currently serving as Technical Lead for SenseUs2026 MakeSense.</p>
         </div>
-        <div class="about-tags">
+        <div class="about-tags fade-in" style="transition-delay:0.1s">
           <div class="tag-group">
             <h3 class="tag-group-title">Skills</h3>
             <div class="tags">
@@ -81,7 +81,7 @@
     <div class="section-inner">
       <h2 class="section-title">Work</h2>
       <div class="cards-grid">
-        <div class="card">
+        <div class="card fade-in" style="transition-delay:0s">
           <div class="card-header">
             <span class="card-icon">⬡</span>
             <span class="card-tag">iGEM 2025</span>
@@ -92,7 +92,7 @@
             <a href="https://2025.igem.wiki/shanghaitech-china/index.html" target="_blank" rel="noopener" class="card-link">Wiki →</a>
           </div>
         </div>
-        <div class="card">
+        <div class="card fade-in" style="transition-delay:0.08s">
           <div class="card-header">
             <span class="card-icon">◎</span>
             <span class="card-tag">Research</span>
@@ -103,7 +103,7 @@
             <a href="https://github.com/MinatoooKira/MCTSevo" target="_blank" rel="noopener" class="card-link">GitHub →</a>
           </div>
         </div>
-        <div class="card">
+        <div class="card fade-in" style="transition-delay:0.16s">
           <div class="card-header">
             <span class="card-icon">◎</span>
             <span class="card-tag">Research</span>
@@ -114,7 +114,7 @@
             <a href="https://github.com/MinatoooKira/MCTSevo-AF3ver" target="_blank" rel="noopener" class="card-link">GitHub →</a>
           </div>
         </div>
-        <div class="card">
+        <div class="card fade-in" style="transition-delay:0.24s">
           <div class="card-header">
             <span class="card-icon">◈</span>
             <span class="card-tag">Tool</span>
@@ -131,7 +131,7 @@
 
   <!-- Contact -->
   <section class="section" id="contact">
-    <div class="section-inner section-center">
+    <div class="section-inner section-center fade-in">
       <h2 class="section-title">Contact</h2>
       <p class="contact-desc">Whether it's research, collaboration, or just a good conversation — feel free to reach out.</p>
       <a href="mailto:liufsh2024@shanghaitech.edu.cn" class="btn btn-primary">Mail</a>
@@ -148,5 +148,24 @@
     <p>© 2026 Fusheng Liu</p>
   </footer>
 
+  <script>
+    // Nav: add scrolled class when page scrolls down
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Scroll fade-in for sections and cards
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
