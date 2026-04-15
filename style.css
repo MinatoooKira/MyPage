@@ -747,22 +747,37 @@ body::before {
   box-shadow: 0 1px 0 var(--border);
 }
 
-/* Hero name entrance */
-@keyframes heroReveal {
-  from {
-    opacity: 0;
-    filter: blur(12px);
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(0);
-  }
+/* Hero name entrance — stroke reveal → fill */
+@keyframes heroStroke {
+  0%   { opacity: 0; filter: blur(10px); transform: translateY(10px); }
+  20%  { opacity: 1; filter: blur(0);    transform: translateY(0); }
+  70%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes heroFill {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .hero-name {
-  animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  position: relative;
+  animation: heroFill 0.5s ease 0.95s both;
+}
+
+/* Stroke layer rendered via ::before */
+.hero-name::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px rgba(124, 106, 247, 0.85);
+  background: none;
+  pointer-events: none;
+  animation: heroStroke 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
 }
 
 /* Scroll fade-in-up */
