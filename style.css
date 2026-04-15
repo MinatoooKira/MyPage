@@ -490,37 +490,27 @@ a {
   font-size: 1.05rem;
 }
 
-.social-links {
+.contact-icons {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.75rem;
   margin-top: 2rem;
+  align-items: center;
 }
 
-.social-link {
-  font-size: 0.875rem;
+.contact-icon {
   color: var(--text-muted);
-  transition: color var(--transition);
-  position: relative;
+  transition: color var(--transition), transform var(--transition);
+  display: flex;
 }
 
-.social-link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transition: transform var(--transition);
+.contact-icon svg {
+  width: 26px;
+  height: 26px;
 }
 
-.social-link:hover {
+.contact-icon:hover {
   color: var(--text);
-}
-
-.social-link:hover::after {
-  transform: scaleX(1);
+  transform: translateY(-3px);
 }
 
 /* ===========================
@@ -738,8 +728,8 @@ a {
   .contact-desc {
     font-size: 0.95rem;
   }
-  .social-links {
-    gap: 1.25rem;
+  .contact-icons {
+    gap: 1.5rem;
     flex-wrap: wrap;
     justify-content: center;
   }
