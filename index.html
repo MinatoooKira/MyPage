@@ -182,7 +182,7 @@
         const dx = (e.clientX - (r.left + r.width  / 2)) / 120;
         const dy = (e.clientY - (r.top  + r.height / 2)) / 120;
         photoWrap.style.transform =
-          `perspective(700px) rotateY(${dx * 8}deg) rotateX(${-dy * 8}deg) scale(1.03)`;
+          `perspective(900px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg) scale(1.015)`;
       });
       heroEl.addEventListener('mouseleave', () => {
         photoWrap.style.transform = '';
