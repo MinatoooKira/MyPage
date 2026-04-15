@@ -226,7 +226,7 @@
         off.width = w; off.height = h;
         const oc = off.getContext('2d');
 
-        const fs = Math.min(Math.floor(w / 7), 170);
+        const fs = Math.min(Math.floor(w / 4), 320);
         oc.font = `700 ${fs}px Inter, "Helvetica Neue", Arial, sans-serif`;
         oc.fillStyle = '#fff';
         oc.textAlign = 'center';
@@ -234,7 +234,7 @@
         oc.fillText('Fusheng Liu', w / 2, h / 2);
 
         const data = oc.getImageData(0, 0, w, h).data;
-        const gap = 8;
+        const gap = 9;
         for (let y = 0; y < h; y += gap) {
           for (let x = 0; x < w; x += gap) {
             if (data[(y * w + x) * 4 + 3] > 120) {
@@ -242,7 +242,7 @@
                 x: x, y: y,
                 hx: x, hy: y,
                 vx: 0, vy: 0,
-                r: Math.random() * 1.2 + 0.5
+                r: Math.random() * 1.5 + 0.7
               });
             }
           }
