@@ -474,7 +474,7 @@ a {
 @media (max-width: 900px) {
   .hero-inner {
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
     text-align: center;
   }
 
@@ -483,7 +483,7 @@ a {
   }
 
   .about-tags {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
   }
 
@@ -493,17 +493,71 @@ a {
 }
 
 @media (max-width: 600px) {
+  /* Nav */
+  .nav-inner {
+    padding: 0 1.25rem;
+  }
   .nav-links {
-    gap: 1.25rem;
+    gap: 1rem;
+  }
+  .nav-links a {
+    font-size: 0.8rem;
   }
 
-  .cards-grid {
-    grid-template-columns: 1fr;
+  /* Hero */
+  .hero {
+    padding: 80px 1.5rem 2rem;
+    min-height: 100svh;
   }
-
+  .hero-photo-wrap,
+  .hero-photo {
+    width: 160px;
+    height: 160px;
+  }
+  .hero-tagline {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
   .hero-actions {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Sections */
+  .section {
+    padding: 3.5rem 1.5rem;
+  }
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  /* About */
+  .about-tags {
+    grid-template-columns: 1fr;
+  }
+  .about-text p {
+    font-size: 0.95rem;
+  }
+
+  /* Cards */
+  .card {
+    padding: 1.25rem;
+  }
+
+  /* Contact */
+  .contact-desc {
+    font-size: 0.95rem;
+  }
+  .social-links {
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
