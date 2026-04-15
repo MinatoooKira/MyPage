@@ -580,8 +580,31 @@ a {
   filter: grayscale(0%);
 }
 
+.gallery-orgs {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 2rem 1rem;
+  background: var(--bg);
+}
+
+.org-logo {
+  height: 48px;
+  width: auto;
+  opacity: 0.7;
+  transition: opacity var(--transition);
+  filter: brightness(0) invert(1);  /* default dark mode: make dark SVG white */
+}
+
+.org-logo:hover {
+  opacity: 1;
+}
+
+[data-theme="light"] .org-logo {
+  filter: none;
+}
+
 .gallery-copyright {
-  padding: 1.5rem 2rem;
+  padding: 0.75rem 2rem 1.5rem;
   text-align: center;
   font-size: 0.8rem;
   color: var(--text-muted);
