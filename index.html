@@ -241,6 +241,24 @@
       });
     }
 
+    // Hero name: split into fill + stroke spans so they animate independently
+    (function () {
+      const nameEl = document.querySelector('.hero-name');
+      if (!nameEl) return;
+      const text = nameEl.dataset.text || nameEl.textContent.trim();
+
+      const fill = document.createElement('span');
+      fill.className = 'hero-name-fill';
+      fill.textContent = text;
+
+      const stroke = document.createElement('span');
+      stroke.className = 'hero-name-stroke';
+      stroke.setAttribute('aria-hidden', 'true');
+      stroke.textContent = text;
+
+      nameEl.replaceChildren(fill, stroke);
+    })();
+
     // Dot-matrix text — "MinatoooKira" particle field with spring physics
     (function () {
       const canvas = document.getElementById('hero-canvas');
