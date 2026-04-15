@@ -241,34 +241,6 @@
       });
     }
 
-    // Hero name scramble entrance
-    (function () {
-      const el = document.querySelector('.hero-name');
-      if (!el) return;
-      const final = el.textContent.trim();
-      const pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
-      function rand() { return pool[Math.floor(Math.random() * pool.length)]; }
-
-      // Pre-scramble immediately to avoid flash of real text
-      el.textContent = [...final].map(c => c === ' ' ? ' ' : rand()).join('');
-
-      let start = null;
-      const PRE  = 480;  // ms of full scramble before any letter locks
-      const STEP =  60;  // ms between each letter locking in
-
-      function frame(ts) {
-        if (!start) start = ts;
-        const locked = Math.max(0, Math.floor((ts - start - PRE) / STEP));
-        el.textContent = [...final].map((c, i) =>
-          c === ' ' ? ' ' : i < locked ? c : rand()
-        ).join('');
-        if (locked <= final.length) requestAnimationFrame(frame);
-        else el.textContent = final;
-      }
-
-      requestAnimationFrame(frame);
-    })();
-
     // Dot-matrix text — "MinatoooKira" particle field with spring physics
     (function () {
       const canvas = document.getElementById('hero-canvas');
