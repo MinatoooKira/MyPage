@@ -226,7 +226,9 @@
         off.width = w; off.height = h;
         const oc = off.getContext('2d');
 
-        const fs = Math.min(Math.floor(w / 4), 320);
+        // Auto-fit: measure at 100px then scale to fill 88% of canvas width
+        oc.font = `700 100px Inter, "Helvetica Neue", Arial, sans-serif`;
+        const fs = Math.floor(100 * (w * 0.88) / oc.measureText('Fusheng Liu').width);
         oc.font = `700 ${fs}px Inter, "Helvetica Neue", Arial, sans-serif`;
         oc.fillStyle = '#fff';
         oc.textAlign = 'center';
@@ -234,7 +236,7 @@
         oc.fillText('Fusheng Liu', w / 2, h / 2);
 
         const data = oc.getImageData(0, 0, w, h).data;
-        const gap = 9;
+        const gap = Math.max(6, Math.round(w / 150));
         for (let y = 0; y < h; y += gap) {
           for (let x = 0; x < w; x += gap) {
             if (data[(y * w + x) * 4 + 3] > 120) {
