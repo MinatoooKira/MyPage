@@ -508,6 +508,36 @@ a {
 }
 
 /* ===========================
+   Mouse interactions
+=========================== */
+
+/* Cursor spotlight */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: radial-gradient(
+    520px circle at var(--cx, -999px) var(--cy, -999px),
+    rgba(124, 106, 247, 0.07),
+    transparent 60%
+  );
+}
+
+/* Hero photo 3D tilt */
+.hero-photo-wrap {
+  transition: transform 0.18s ease;
+  will-change: transform;
+}
+
+/* Magnetic buttons — smooth snap back */
+.btn {
+  transition: background var(--transition), border-color var(--transition),
+              color var(--transition), transform 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ===========================
    Animations
 =========================== */
 
