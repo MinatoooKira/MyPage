@@ -718,6 +718,11 @@ body::before {
   pointer-events: none;
   opacity: 0.28;
   filter: blur(0.7px);
+  transition: opacity 0.3s ease;
+}
+[data-theme="light"] #hero-canvas {
+  opacity: 0.75;
+  filter: blur(0.4px);
 }
 
 /* Hero photo 3D tilt */
