@@ -232,6 +232,7 @@ a {
 /* Gradient fill span */
 .hero-name-fill {
   display: block;
+  padding-bottom: 0.15em;
   background: linear-gradient(135deg, #e8e8e8 0%, #888 100%);
   -webkit-background-clip: text;
   background-clip: text;
