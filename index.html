@@ -640,8 +640,8 @@
             if (d2 < R * R && d2 > 0) {
               const d = Math.sqrt(d2);
               const f = ((R - d) / R) * FORCE;
-              p.vx += (dx / d) * f;
-              p.vy += (dy / d) * f;
+              p.vx += (-dx / d) * f;  // attraction: pull toward mouse
+              p.vy += (-dy / d) * f;
             }
             p.vx += (hx - p.x) * 0.052;
             p.vy += (hy - p.y) * 0.052;
