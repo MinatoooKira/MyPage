@@ -632,7 +632,7 @@
           ctx.clearRect(0, 0, w, h);
 
           for (const p of ps) {
-            const phase = p.strand === 0 ? 0 : Math.PI;
+            const phase = p.strand === 0 ? 0 : Math.PI / 2;
             const hx = p.baseX;
             const hy = cy + Math.sin(k * p.baseX + flow + phase) * amp;
             const dx = p.x - mx, dy = p.y - my;
@@ -680,7 +680,7 @@
 
           // Nucleotide dots — size & alpha modulated by depth (front/back illusion)
           for (const p of ps) {
-            const phase = p.strand === 0 ? 0 : Math.PI;
+            const phase = p.strand === 0 ? 0 : Math.PI / 2;
             const s = Math.sin(k * p.baseX + flow + phase); // -1 (back) .. +1 (front)
             const depth = (s + 1) / 2;                      // 0..1
             const rr = p.r * (0.65 + 0.55 * depth);
