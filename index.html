@@ -374,13 +374,14 @@
       });
     })();
 
-    // Dot-matrix text — "MinatoooKira" particle field with spring physics
+    // Dot-matrix text — "MinatoooKira" particle field with spring physics + glow
     (function () {
       const canvas = document.getElementById('hero-canvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       let particles = [];
       let mx = -9999, my = -9999;
+      const t0 = performance.now();
 
       function resize() {
         canvas.width  = canvas.offsetWidth;
@@ -411,11 +412,19 @@
         for (let y = 0; y < h; y += gap) {
           for (let x = 0; x < w; x += gap) {
             if (data[(y * w + x) * 4 + 3] > 120) {
+              // Spawn from an off-screen ring -> flies into position (intro anim)
+              const a = Math.random() * Math.PI * 2;
+              const d = Math.max(w, h) * (0.55 + Math.random() * 0.35);
               particles.push({
-                x: x, y: y,
+                x:  w / 2 + Math.cos(a) * d,
+                y:  h / 2 + Math.sin(a) * d,
                 hx: x, hy: y,
                 vx: 0, vy: 0,
-                r: Math.random() * 1.5 + 0.7
+                r: Math.random() * 1.4 + 0.9,
+                // Hue gradient across the width: 250 (violet) -> 330 (pink)
+                hue: 250 + (x / w) * 80,
+                phase: Math.random() * Math.PI * 2,
+                twinkle: Math.random() * Math.PI * 2
               });
             }
           }
@@ -423,10 +432,26 @@
       }
 
       function tick() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const R = 90, K = 7, spring = 0.055, damp = 0.80;
+        const w = canvas.width, h = canvas.height;
+        const light = document.documentElement.getAttribute('data-theme') === 'light';
+
+        // Motion-trail: fade previous frame instead of clearing
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = light ? 'rgba(245, 245, 245, 0.28)' : 'rgba(15, 15, 15, 0.22)';
+        ctx.fillRect(0, 0, w, h);
+
+        const R = 110, K = 8, spring = 0.06, damp = 0.82;
+        const t = (performance.now() - t0) * 0.001;
+
+        // Additive glow in dark mode, normal in light
+        ctx.globalCompositeOperation = light ? 'source-over' : 'lighter';
 
         for (const p of particles) {
+          // Gentle breathing around home position
+          const bx = p.hx + Math.sin(t * 1.1 + p.phase) * 1.2;
+          const by = p.hy + Math.cos(t * 1.1 + p.phase) * 1.2;
+
+          // Cursor repulsion
           const dx = p.x - mx, dy = p.y - my;
           const d2 = dx * dx + dy * dy;
           if (d2 < R * R && d2 > 0) {
@@ -435,19 +460,39 @@
             p.vx += (dx / d) * f;
             p.vy += (dy / d) * f;
           }
-          p.vx += (p.hx - p.x) * spring;
-          p.vy += (p.hy - p.y) * spring;
+          p.vx += (bx - p.x) * spring;
+          p.vy += (by - p.y) * spring;
           p.vx *= damp;
           p.vy *= damp;
           p.x  += p.vx;
           p.y  += p.vy;
 
+          const speed    = Math.hypot(p.vx, p.vy);
+          const twinkle  = 0.75 + 0.25 * Math.sin(t * 2.2 + p.twinkle);
+          const size     = p.r + Math.min(speed * 0.4, 2.2);
+          const sat      = light ? 80 : 85;
+          const lum      = light ? 48 : 68;
+
+          // Outer halo
+          ctx.fillStyle = `hsla(${p.hue}, ${sat}%, ${lum}%, ${light ? 0.10 : 0.14})`;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          const light = document.documentElement.getAttribute('data-theme') === 'light';
-          ctx.fillStyle = light ? 'rgba(70, 50, 190, 0.65)' : 'rgba(200, 188, 255, 0.82)';
+          ctx.arc(p.x, p.y, size * 4, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Mid glow
+          ctx.fillStyle = `hsla(${p.hue}, ${sat}%, ${lum}%, ${light ? 0.28 : 0.35})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, size * 2, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Bright core
+          ctx.fillStyle = `hsla(${p.hue}, ${sat}%, ${light ? 40 : 78}%, ${0.85 * twinkle})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
           ctx.fill();
         }
+
+        ctx.globalCompositeOperation = 'source-over';
         requestAnimationFrame(tick);
       }
 
