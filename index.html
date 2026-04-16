@@ -56,6 +56,7 @@
 
   <!-- About -->
   <section class="section" id="about">
+    <canvas class="section-canvas" data-field></canvas>
     <div class="section-inner">
       <h2 class="section-title">About</h2>
       <div class="about-grid">
@@ -93,6 +94,7 @@
 
   <!-- Work -->
   <section class="section section-alt" id="work">
+    <canvas class="section-canvas" data-field></canvas>
     <div class="section-inner">
       <h2 class="section-title">Work</h2>
       <div class="cards-grid">
@@ -531,6 +533,117 @@
         clearTimeout(rt);
         rt = setTimeout(resize, 200);
       }, { passive: true });
+    })();
+
+    // Constellation fields for About + Work — sparse drifting particles, with
+    // link lines between nearby particles and gentle mouse repulsion.
+    (function () {
+      document.querySelectorAll('canvas[data-field]').forEach(canvas => {
+        const ctx    = canvas.getContext('2d');
+        const parent = canvas.parentElement;
+        let particles = [];
+        let mx = -9999, my = -9999;
+        let visible = false;
+
+        function resize() {
+          canvas.width  = parent.offsetWidth;
+          canvas.height = parent.offsetHeight;
+          build();
+        }
+
+        function build() {
+          particles = [];
+          const area  = canvas.width * canvas.height;
+          const count = Math.min(70, Math.max(18, Math.round(area / 26000)));
+          for (let i = 0; i < count; i++) {
+            particles.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              vx: (Math.random() - 0.5) * 0.18,
+              vy: (Math.random() - 0.5) * 0.18,
+              r: Math.random() * 1.2 + 0.8
+            });
+          }
+        }
+
+        function tick() {
+          requestAnimationFrame(tick);
+          if (!visible) return;
+
+          const w = canvas.width, h = canvas.height;
+          const light = document.documentElement.getAttribute('data-theme') === 'light';
+          const core  = light ? '70, 50, 190' : '200, 188, 255';
+
+          ctx.clearRect(0, 0, w, h);
+
+          const R = 110;
+          for (const p of particles) {
+            p.x += p.vx;
+            p.y += p.vy;
+            // Wrap around edges
+            if (p.x < 0) p.x = w; else if (p.x > w) p.x = 0;
+            if (p.y < 0) p.y = h; else if (p.y > h) p.y = 0;
+            // Mouse repulsion — very gentle
+            const dx = p.x - mx, dy = p.y - my;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < R * R && d2 > 0) {
+              const d = Math.sqrt(d2);
+              const f = ((R - d) / R) * 0.35;
+              p.x += (dx / d) * f;
+              p.y += (dy / d) * f;
+            }
+          }
+
+          // Link lines
+          const linkD = 140;
+          ctx.lineWidth = 0.6;
+          for (let i = 0; i < particles.length; i++) {
+            const p1 = particles[i];
+            for (let j = i + 1; j < particles.length; j++) {
+              const p2 = particles[j];
+              const dx = p1.x - p2.x, dy = p1.y - p2.y;
+              const d2 = dx * dx + dy * dy;
+              if (d2 < linkD * linkD) {
+                const a = (1 - Math.sqrt(d2) / linkD) * (light ? 0.14 : 0.18);
+                ctx.strokeStyle = `rgba(${core}, ${a})`;
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+              }
+            }
+          }
+
+          // Dots
+          for (const p of particles) {
+            ctx.fillStyle = `rgba(${core}, ${light ? 0.55 : 0.70})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        parent.addEventListener('mousemove', e => {
+          const r = canvas.getBoundingClientRect();
+          mx = e.clientX - r.left;
+          my = e.clientY - r.top;
+        }, { passive: true });
+        parent.addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
+
+        // Only animate when the section is on screen
+        new IntersectionObserver(entries => {
+          visible = entries[0].isIntersecting;
+        }, { threshold: 0 }).observe(parent);
+
+        let rt;
+        window.addEventListener('resize', () => {
+          clearTimeout(rt);
+          rt = setTimeout(resize, 200);
+        }, { passive: true });
+
+        resize();
+        tick();
+      });
     })();
   </script>
 </body>

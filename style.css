@@ -343,11 +343,31 @@ a {
 =========================== */
 .section {
   padding: 6rem 2rem;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Snap landing point — hero snaps here; sections after about scroll freely */
 #about {
   scroll-snap-align: start;
+}
+
+/* Decorative particle field behind section content */
+.section-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+}
+[data-theme="light"] .section-canvas {
+  opacity: 0.85;
+}
+.section-inner {
+  position: relative;
+  z-index: 1;
 }
 
 .section-alt {
