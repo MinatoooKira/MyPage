@@ -459,6 +459,91 @@ a {
   gap: 1.5rem;
 }
 
+/* ---- Horizontal Work module ---- */
+.work-horizontal {
+  padding: 0;
+  overflow: visible;
+}
+
+.work-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-alt);
+}
+
+.work-pin-inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 6rem 0 4rem;
+}
+
+.work-header {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.work-horizontal .section-title {
+  margin-bottom: 0;
+}
+
+.work-hint {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.cards-track {
+  flex: 1;
+  min-height: 0;
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  padding-left: max(2rem, calc((100vw - 1100px) / 2));
+}
+
+.cards-row {
+  display: flex;
+  gap: 1.5rem;
+  will-change: transform;
+  transform: translateX(0);
+}
+
+.cards-row::after {
+  content: '';
+  flex: 0 0 max(2rem, calc((100vw - 1100px) / 2));
+}
+
+.cards-row .card {
+  flex: 0 0 360px;
+  padding: 2rem;
+  min-height: 440px;
+  gap: 1rem;
+}
+
+.cards-row .card-title {
+  font-size: 1.15rem;
+}
+
+.cards-row .card-desc {
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -814,6 +899,55 @@ a {
 
   .cards-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Horizontal Work → vertical stack on mobile/tablet */
+  .work-horizontal {
+    padding: 6rem 2rem;
+  }
+  .work-pin {
+    position: static;
+    height: auto;
+    overflow: visible;
+    background: transparent;
+  }
+  .work-pin-inner {
+    padding: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .work-header {
+    padding: 0;
+    margin-bottom: 1.5rem;
+  }
+  .work-hint {
+    display: none;
+  }
+  .cards-track {
+    margin-top: 0;
+    padding-left: 0;
+    overflow: visible;
+    display: block;
+  }
+  .cards-row {
+    flex-direction: column;
+    gap: 1.25rem;
+    transform: none !important;
+  }
+  .cards-row::after {
+    display: none;
+  }
+  .cards-row .card {
+    flex: none;
+    min-height: auto;
+    padding: 1.5rem;
+  }
+  .cards-row .card-title {
+    font-size: 1rem;
+  }
+  .cards-row .card-desc {
+    font-size: 0.875rem;
+    line-height: 1.7;
   }
 }
 
