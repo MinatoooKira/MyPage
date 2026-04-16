@@ -36,6 +36,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Sticky-page feel only between hero and about; rest scrolls freely */
+  scroll-snap-type: y proximity;
 }
 
 body {
@@ -146,6 +148,7 @@ a {
 =========================== */
 .hero {
   min-height: 100vh;
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -324,6 +327,11 @@ a {
 =========================== */
 .section {
   padding: 6rem 2rem;
+}
+
+/* Snap landing point — hero snaps here; sections after about scroll freely */
+#about {
+  scroll-snap-align: start;
 }
 
 .section-alt {
