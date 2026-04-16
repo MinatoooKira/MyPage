@@ -242,6 +242,9 @@
     <div class="gallery-copyright">© 2026 Fusheng Liu</div>
   </footer>
 
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
@@ -266,7 +269,11 @@
       nav.classList.toggle('scrolled', window.scrollY > 40);
       const max = document.documentElement.scrollHeight - window.innerHeight;
       progressBar.style.width = max > 0 ? (window.scrollY / max * 100) + '%' : '0%';
+      backToTop.classList.toggle('visible', max > 0 && window.scrollY >= max - 40);
     }, { passive: true });
+
+    const backToTop = document.getElementById('back-to-top');
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
     // Scroll fade-in for sections and cards
     const observer = new IntersectionObserver((entries) => {
