@@ -623,7 +623,7 @@
           const { w, h, light, mx, my, t } = s;
           const core = light ? '70, 50, 190' : '200, 188, 255';
           const cy  = h / 2;
-          const amp = Math.min(110, h * 0.18);
+          const amp = Math.min(85, h * 0.12);
           const wavelength = Math.max(220, w / 3.2);
           const k = (Math.PI * 2) / wavelength;
           const flow = t * 0.45;
