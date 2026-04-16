@@ -627,7 +627,7 @@
           const wavelength = Math.max(220, w / 3.2);
           const k = (Math.PI * 2) / wavelength;
           const flow = t * 0.45;
-          const R = 260, FORCE = 0.65, minD = 25;
+          const R = 260, FORCE = 0.5;
 
           ctx.clearRect(0, 0, w, h);
 
@@ -637,8 +637,7 @@
             const hy = cy + Math.sin(k * p.baseX + flow + phase) * amp;
             const dx = p.x - mx, dy = p.y - my;
             const d2 = dx * dx + dy * dy;
-            // Only attract if not too close (avoid oscillation near cursor)
-            if (d2 < R * R && d2 > minD * minD) {
+            if (d2 < R * R && d2 > 0) {
               const d = Math.sqrt(d2);
               const f = ((R - d) / R) * FORCE;
               p.vx += (-dx / d) * f;  // attraction: pull toward mouse
