@@ -31,6 +31,7 @@
         </svg>
       </button>
     </div>
+    <div class="scroll-progress" id="scroll-progress"></div>
   </nav>
 
   <!-- Hero -->
@@ -258,10 +259,13 @@
       localStorage.setItem('theme', next);
     });
 
-    // Nav: add scrolled class when page scrolls down
+    // Nav: scrolled class + scroll progress bar
     const nav = document.querySelector('.nav');
+    const progressBar = document.getElementById('scroll-progress');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = max > 0 ? (window.scrollY / max * 100) + '%' : '0%';
     }, { passive: true });
 
     // Scroll fade-in for sections and cards
