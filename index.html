@@ -418,7 +418,7 @@
                 vx: 0, vy: 0,
                 r: Math.random() * 1.3 + 0.9,
                 phase: Math.random() * Math.PI * 2,
-                birth: Math.random() * 5   // staggered over 5 s
+                birth: Math.random() * 2   // staggered over 2 s
               });
             }
           }
@@ -433,7 +433,7 @@
         ctx.clearRect(0, 0, w, h);
 
         // Very slow, heavily damped spring — Apple-style floaty easing
-        const R = 95, K = 2.2, spring = 0.007, damp = 0.95;
+        const R = 95, K = 1.4, spring = 0.007, damp = 0.95;
         const t = (performance.now() - t0) * 0.001;
 
         // Original palette — muted violet, single hue

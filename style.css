@@ -830,12 +830,12 @@ body::before {
   height: 100%;
   pointer-events: none;
   opacity: 0.45;
-  filter: blur(2.5px);
+  filter: blur(4px);
   transition: opacity 0.3s ease;
 }
 [data-theme="light"] #hero-canvas {
   opacity: 0.85;
-  filter: blur(2px);
+  filter: blur(3px);
 }
 
 /* Hero photo 3D tilt */
