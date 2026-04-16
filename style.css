@@ -294,9 +294,11 @@ a {
 .hero-scroll-hint {
   position: absolute;
   bottom: 2rem;
-  font-size: 1.2rem;
   color: var(--text-muted);
   animation: bounce 2s infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes bounce {
