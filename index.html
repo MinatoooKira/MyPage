@@ -266,15 +266,23 @@
       localStorage.setItem('theme', next);
     });
 
-    // Nav: scrolled class + scroll progress bar
+    // Nav: scrolled class + scroll progress bar (RAF-throttled to avoid jank)
     const nav = document.querySelector('.nav');
     const progressBar = document.getElementById('scroll-progress');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      progressBar.style.width = max > 0 ? (window.scrollY / max * 100) + '%' : '0%';
-      backToTop.classList.toggle('visible', max > 0 && window.scrollY >= max - 40);
-    }, { passive: true });
+    let rafPending = false;
+    function onScroll() {
+      if (rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(() => {
+        rafPending = false;
+        const y = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        nav.classList.toggle('scrolled', y > 40);
+        progressBar.style.width = max > 0 ? (y / max * 100) + '%' : '0%';
+        backToTop.classList.toggle('visible', max > 0 && y >= max - 40);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     const backToTop = document.getElementById('back-to-top');
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
