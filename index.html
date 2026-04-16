@@ -435,17 +435,17 @@
         // Full clear each frame — keeps text crisp, no ghosting behind other copy
         ctx.clearRect(0, 0, w, h);
 
-        // Slower, softer spring — Apple-style easing
-        const R = 95, K = 3.5, spring = 0.028, damp = 0.90;
+        // Very slow, heavily damped spring — Apple-style floaty easing
+        const R = 95, K = 2.2, spring = 0.016, damp = 0.93;
         const t = (performance.now() - t0) * 0.001;
 
         // Original palette — muted violet, single hue
         const core = light ? '70, 50, 190' : '200, 188, 255';
 
         for (const p of particles) {
-          // Subtle breathing around home position
-          const bx = p.hx + Math.sin(t * 0.45 + p.phase) * 0.8;
-          const by = p.hy + Math.cos(t * 0.45 + p.phase) * 0.8;
+          // Subtle, slow breathing around home position
+          const bx = p.hx + Math.sin(t * 0.25 + p.phase) * 0.7;
+          const by = p.hy + Math.cos(t * 0.25 + p.phase) * 0.7;
 
           // Cursor repulsion
           const dx = p.x - mx, dy = p.y - my;
