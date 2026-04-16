@@ -542,6 +542,8 @@ a {
 .cards-row .card-desc {
   font-size: 0.95rem;
   line-height: 1.7;
+  display: flex;
+  align-items: center;
 }
 
 .card {
