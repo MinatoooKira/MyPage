@@ -4,7 +4,7 @@ iGEM2025 金牌
 iGEM2026 Advisor
 MakeSense社团联合创始人
 Match Biotech联合创始人
-SenseUs2026 MakeSense 技术负责人
+SensUs2026 MakeSense 技术负责人
 ## skills
 机器学习
 生物-湿实验能力
