@@ -347,10 +347,7 @@ a {
   overflow: hidden;
 }
 
-/* Snap landing point — hero snaps here; sections after about scroll freely */
-#about {
-  scroll-snap-align: start;
-}
+/* Only hero section snaps; rest scrolls freely */
 
 /* Decorative particle field behind section content */
 .section-canvas {
