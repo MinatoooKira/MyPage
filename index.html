@@ -622,7 +622,7 @@
           const wavelength = Math.max(220, w / 3.2);
           const k = (Math.PI * 2) / wavelength;
           const flow = t * 0.45;
-          const R = 110, FORCE = 0.55;
+          const R = 180, FORCE = 0.85;
 
           ctx.clearRect(0, 0, w, h);
 
@@ -638,10 +638,10 @@
               p.vx += (dx / d) * f;
               p.vy += (dy / d) * f;
             }
-            p.vx += (hx - p.x) * 0.10;
-            p.vy += (hy - p.y) * 0.10;
-            p.vx *= 0.86;
-            p.vy *= 0.86;
+            p.vx += (hx - p.x) * 0.052;
+            p.vy += (hy - p.y) * 0.052;
+            p.vx *= 0.93;
+            p.vy *= 0.93;
             p.x += p.vx;
             p.y += p.vy;
           }
