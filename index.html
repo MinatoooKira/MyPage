@@ -637,7 +637,8 @@
             const hy = cy + Math.sin(k * p.baseX + flow + phase) * amp;
             const dx = p.x - mx, dy = p.y - my;
             const d2 = dx * dx + dy * dy;
-            if (d2 < R * R && d2 > 0) {
+            // Temporarily disabled: mouse attraction
+            if (false && d2 < R * R && d2 > 0) {
               const d = Math.sqrt(d2);
               const f = ((R - d) / R) * FORCE;
               p.vx += (-dx / d) * f;  // attraction: pull toward mouse
