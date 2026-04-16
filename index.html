@@ -301,6 +301,21 @@
     const backToTop = document.getElementById('back-to-top');
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+    // About tags: click to search (browsers don't expose the default
+    // search engine to web pages, so we use Google)
+    document.querySelectorAll('.about-tags .tag').forEach(tag => {
+      const text = tag.textContent.trim();
+      const url  = `https://www.google.com/search?q=${encodeURIComponent(text)}`;
+      tag.setAttribute('role', 'link');
+      tag.setAttribute('tabindex', '0');
+      tag.setAttribute('title', `Search "${text}"`);
+      const open = () => window.open(url, '_blank', 'noopener');
+      tag.addEventListener('click', open);
+      tag.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+      });
+    });
+
     // Scroll fade-in for sections and cards
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
