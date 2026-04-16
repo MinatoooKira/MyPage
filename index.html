@@ -241,6 +241,12 @@
     <div class="gallery-copyright">© 2026 Fusheng Liu</div>
   </footer>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+    <img src="" alt="" class="lightbox-img" id="lightbox-img" />
+  </div>
+
   <script>
     // Theme toggle
     const root = document.documentElement;
@@ -326,6 +332,43 @@
       stroke.textContent = text;
 
       nameEl.replaceChildren(fill, stroke);
+    })();
+
+    // Gallery lightbox: click image to zoom, click again (or close button / Esc) to dismiss
+    (function () {
+      const lightbox    = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn    = document.getElementById('lightbox-close');
+      if (!lightbox || !lightboxImg) return;
+
+      function open(src, alt) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || '';
+        lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        lightbox.classList.remove('active');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.gallery-item img').forEach(img => {
+        img.addEventListener('click', () => open(img.src, img.alt));
+      });
+
+      lightbox.addEventListener('click', (e) => {
+        // Clicking the image itself also closes (requested behavior)
+        if (e.target === lightbox || e.target === lightboxImg || e.target === closeBtn) {
+          close();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) close();
+      });
     })();
 
     // Dot-matrix text — "MinatoooKira" particle field with spring physics
