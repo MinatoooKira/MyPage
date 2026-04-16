@@ -436,8 +436,8 @@
           for (let x = 0; x < w; x += gap) {
             if (data[(y * w + x) * 4 + 3] > 120) {
               // Small random offset (≤ 28px) so particles spring in from nearby
-              const ox = (Math.random() - 0.5) * 56;
-              const oy = (Math.random() - 0.5) * 56;
+              const ox = (Math.random() - 0.5) * 120;
+              const oy = (Math.random() - 0.5) * 120;
               particles.push({
                 x: x + ox, y: y + oy,
                 hx: x, hy: y,
