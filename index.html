@@ -287,7 +287,7 @@
     // Theme toggle
     const root = document.documentElement;
     const themeBtn = document.getElementById('theme-toggle');
-    root.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+    root.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
     themeBtn.addEventListener('click', () => {
       const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
